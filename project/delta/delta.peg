@@ -16,8 +16,19 @@ while = 'while' expression block
 expression = multiplicative (('+' / '-') multiplicative)*
 multiplicative = unary (('*' / '/' / '%') unary)*
 unary = ('+' / '-' / '!')* primary
-primary = decimal / boolean / parenthesis / rhs_variable
-decimal = r'\d+'
+primary = integer_literal / boolean / parenthesis / rhs_variable
+decimal = r'0|[1-9][0-9]*'
+
+//#--- PARTE A ---
+binary_literal = r'#b[01]+'
+octal_literal = r'#o[0-7]+'
+hex_literal = r'#x[0-9a-fA-F]+'
+integer_literal = binary_literal / octal_literal / hex_literal / decimal
+
+
+
+
+
 boolean = 'true' / 'false'
 parenthesis = '(' expression ')'
 rhs_variable = identifier

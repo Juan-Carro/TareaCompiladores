@@ -3,28 +3,5 @@
   (func
     (export "_start")
     (result i32)
-    (local $x i32)
-    (local $y i32)
-    i32.const 0
-    local.set $x
-    i32.const 0
-    local.set $y
-    block
-    loop
-    local.get $x
-    i32.eqz
-    br_if 1
-    local.get $x
-    i32.const 1
-    i32.sub
-    local.set $x
-    i32.const 1
-    local.set $y
-    br 0
-    end
-    end
-    local.get $x
-    local.get $y
-    i32.add
-  )
+#o20000000000  )
 )
