@@ -3,5 +3,6 @@
   (func
     (export "_start")
     (result i32)
-#o20000000000  )
+    i32.const 342391
+  )
 )

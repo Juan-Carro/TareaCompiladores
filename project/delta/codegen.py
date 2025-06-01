@@ -111,6 +111,27 @@ class CodeGenerationVisitor(PTNodeVisitor):
 
     def visit_decimal(self, node, children):
         return f'    i32.const {node.value}\n'
+    
+    def visit_binary(self, node, children):
+        value_str = node.value[2:]
+        if not value_str:
+            raise ValueError('Empty binary literal')
+        value = int(value_str, 2)
+        return f'    i32.const {value}\n'
+    
+    def visit_octal(self, node, children):
+        value_str = node.value[2:]
+        if not value_str:
+            raise ValueError('Empty octal literal')
+        value = int(value_str, 8)
+        return f'    i32.const {value}\n'
+    
+    def visit_hexadecimal(self, node, children):
+        value_str = node.value[2:]
+        if not value_str:
+            raise ValueError('Empty hexadecimal literal')
+        value = int(value_str, 16)
+        return f'    i32.const {value}\n'
 
     def visit_boolean(self, node, children):
         if children[0] == 'true':
