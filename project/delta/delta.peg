@@ -13,9 +13,14 @@ lhs_variable = identifier
 if = 'if' expression block ('else' block)?
 block = '{' statement* '}'
 while = 'while' expression block
-expression = multiplicative (('+' / '-') multiplicative)*
+
+expression = comparison (('+' / '-') comparison)*
+comparison = additive (('==' / '!=' / '>=' / '>' / '<=' / '<') additive)*
+additive = multiplicative (('+' / '-') multiplicative)*
 multiplicative = unary (('*' / '/' / '%') unary)*
 unary = ('+' / '-' / '!')* primary
+
+
 primary = decimal / binary / octal / hexadecimal / boolean / parenthesis / rhs_variable
 decimal = r'\d+'
 
