@@ -18,7 +18,6 @@ class CodeGenerationVisitor(PTNodeVisitor):
         self.__symbol_table = symbol_table
 
     def visit_program(self, node, children):
-
         def declare_variable():
             return ''.join([f'    (local ${var_name} i32)\n'
                             for var_name in self.__symbol_table])
@@ -67,6 +66,20 @@ class CodeGenerationVisitor(PTNodeVisitor):
             + '    br 0\n'
             + '    end\n'
             + '    end\n')
+    def visit_do_while(self, node, children):
+        block = children[0]
+        condition = children[1]
+        return (
+            '    block\n'
+            + '    loop\n'
+            f'{block}'
+            f'{condition}'
+            '    i32.eqz\n'
+            '    br_if 1\n'
+            '    br 0\n'
+            '    end\n'
+            '    end\n'
+        )
 
     def visit_expression(self, node, children):
         result = [children[0]]
@@ -108,8 +121,7 @@ class CodeGenerationVisitor(PTNodeVisitor):
                 case '-':
                     result.append('    i32.sub\n')
         return ''.join(result)
-    
-    
+
     def visit_multiplicative(self, node, children):
         result = [children[0]]
         for i in range(1, len(children), 2):
