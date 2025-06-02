@@ -10,20 +10,20 @@
     i32.const 1
     local.set $u
     local.get $u
-    i32.eqz
-    if (result i32)
-    i32.const 1
-    else
+     if (result i32)
     local.get $t
-    if (result i32)
-    i32.const 1
-    else
+    i32.eqz
+     if (result i32)
     local.get $u
     local.get $t
     i32.div_s
-    i32.eqz
-    i32.eqz
+     i32.eqz
+     i32.eqz
+    else
+       i32.const 0
     end
+    else
+       i32.const 0
     end
   )
 )

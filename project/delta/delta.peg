@@ -1,4 +1,5 @@
-//# Gramática del lenguaje delta
+//# Gramática del lenguaje delta # Author: A01748640 Juan Carlos Carro Cruz
+
 
 comment = r'[/][/].*|[/][*](.|\n)*?[*][/]'
 
