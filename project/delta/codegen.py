@@ -80,17 +80,36 @@ class CodeGenerationVisitor(PTNodeVisitor):
             '    end\n'
             '    end\n'
         )
+    
+
 
     def visit_expression(self, node, children):
+        if len(children) == 1:
+            return children[0]
         result = [children[0]]
-        for i in range(1, len(children), 2):
-            result.append(children[i + 1])
-            match children[i]:
-                case '+':
-                    result.append('    i32.add\n')
-                case '-':
-                    result.append('    i32.sub\n')
-        return ''.join(result)
+        for exp in children[1:]:
+            result += (
+                '    if (result i32)\n'
+                + '    i32.const 1\n'
+                + '    else\n'
+                + exp
+            )
+        result.append('    i32.eqz\n' * 2)
+        result.append(('    end\n') * (len(children) - 1))
+        return "".join(result)
+
+    def visit_logical_and(self, node, children):
+        if len(children) == 1:
+            return children[0]
+        result = [children[0]]
+        for exp in children[1:]:
+            result.append(f" if (result i32)\n")
+            result.append(exp)
+            result.append(f"  i32.eqz\n" * 2)
+            result.append((f" else\n"
+                        f"  i32.const 0\n"
+                        f" end\n") * (len(children) - 1))
+        return "".join(result)
 
     def visit_comparison(self, node, children):
         result = [children[0]]
